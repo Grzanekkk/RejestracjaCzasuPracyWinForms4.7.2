@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30524.135
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RejestracjaCzasuPracyWinForms", "RejestracjaCzasuPracyWinForms.csproj", "{69D7C71F-FCA5-4473-8B5D-61FAC7505AA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseConnection", "..\..\..\Desktop\Programowanie\Rejestracja-Czasu-Pracy\RejestracjaCzasuPracy\DatabaseConnection\DatabaseConnection.csproj", "{9BFA8D6D-AD95-4E84-BBFF-45940AADA586}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseConnection", "..\DatabaseConnection\DatabaseConnection.csproj", "{75A6C440-96EC-4305-9774-CD2C341FBA40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{69D7C71F-FCA5-4473-8B5D-61FAC7505AA7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{69D7C71F-FCA5-4473-8B5D-61FAC7505AA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{69D7C71F-FCA5-4473-8B5D-61FAC7505AA7}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9BFA8D6D-AD95-4E84-BBFF-45940AADA586}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9BFA8D6D-AD95-4E84-BBFF-45940AADA586}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9BFA8D6D-AD95-4E84-BBFF-45940AADA586}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9BFA8D6D-AD95-4E84-BBFF-45940AADA586}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75A6C440-96EC-4305-9774-CD2C341FBA40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75A6C440-96EC-4305-9774-CD2C341FBA40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75A6C440-96EC-4305-9774-CD2C341FBA40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75A6C440-96EC-4305-9774-CD2C341FBA40}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

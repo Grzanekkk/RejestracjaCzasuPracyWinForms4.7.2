@@ -134,6 +134,7 @@ namespace RejestracjaCzasuPracyWinForms
             this.finishHourTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.finishHourTextBox.Location = new System.Drawing.Point(696, 68);
             this.finishHourTextBox.Name = "finishHourTextBox";
+            this.finishHourTextBox.ReadOnly = true;
             this.finishHourTextBox.Size = new System.Drawing.Size(49, 26);
             this.finishHourTextBox.TabIndex = 10;
             // 
@@ -152,6 +153,7 @@ namespace RejestracjaCzasuPracyWinForms
             this.startHourTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.startHourTextBox.Location = new System.Drawing.Point(622, 69);
             this.startHourTextBox.Name = "startHourTextBox";
+            this.startHourTextBox.ReadOnly = true;
             this.startHourTextBox.Size = new System.Drawing.Size(48, 26);
             this.startHourTextBox.TabIndex = 12;
             // 

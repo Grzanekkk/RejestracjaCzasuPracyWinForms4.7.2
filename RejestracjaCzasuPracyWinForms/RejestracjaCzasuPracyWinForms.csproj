@@ -129,8 +129,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Desktop\Programowanie\Rejestracja-Czasu-Pracy\RejestracjaCzasuPracy\DatabaseConnection\DatabaseConnection.csproj">
-      <Project>{9bfa8d6d-ad95-4e84-bbff-45940aada586}</Project>
+    <ProjectReference Include="..\DatabaseConnection\DatabaseConnection.csproj">
+      <Project>{75a6c440-96ec-4305-9774-cd2c341fba40}</Project>
       <Name>DatabaseConnection</Name>
     </ProjectReference>
   </ItemGroup>
