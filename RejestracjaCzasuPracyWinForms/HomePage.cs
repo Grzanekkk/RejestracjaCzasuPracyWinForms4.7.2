@@ -8,6 +8,8 @@ namespace RejestracjaCzasuPracyWinForms
     public partial class HomePage : Form
     {
         User currentUser;
+        TimeManager timeManager = new TimeManager();
+        UserManager userManager = new UserManager();
 
         public HomePage(User _currentUser)
         {
@@ -34,7 +36,7 @@ namespace RejestracjaCzasuPracyWinForms
             //    return;
             //}
 
-            AddNewEventMsgBox(TimeManager.GoHome(currentUser));
+            AddNewEventMsgBox(timeManager.CountMinutesToCatchUpFromNow(currentUser));
         }
 
 
@@ -82,7 +84,7 @@ namespace RejestracjaCzasuPracyWinForms
 
             if (dialog == DialogResult.Yes)     // Add new Event
             {
-                TimeManager.AddNewEvent(currentUser.id, minutesToCatchUp);
+                timeManager.AddNewEvent(currentUser.id, minutesToCatchUp);
 
                 RefreshWindow();
             }
@@ -90,8 +92,8 @@ namespace RejestracjaCzasuPracyWinForms
 
         private void RefreshWindow()
         {
-            eventsGridView.DataSource = User.GetAllUserEvents(currentUser.id);
-            minutesToCatchUpTextBox.Text = TimeManager.CountMinutesToCatchUp(currentUser.id).ToString();
+            eventsGridView.DataSource = userManager.GetAllUserEvents(currentUser.id);
+            minutesToCatchUpTextBox.Text = timeManager.CountUserTimeToCatchUp(currentUser.id).ToString();
         }
 
         void FillWorkHoursTextBoxes()

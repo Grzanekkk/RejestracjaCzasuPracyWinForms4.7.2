@@ -7,6 +7,8 @@ namespace RejestracjaCzasuPracyWinForms
 {
     public partial class SIgnUpForm : Form
     {
+        DBAccess dbAccess = new DBAccess();
+
         string name;
         string password;
 
@@ -29,7 +31,7 @@ namespace RejestracjaCzasuPracyWinForms
                 insertCommand.Parameters.AddWithValue("@UserID", Guid.NewGuid());
                 insertCommand.Parameters.AddWithValue("@Name", name);
 
-                int row = DBAccess.ExecuteQuery(insertCommand);
+                int row = dbAccess.ExecuteQuery(insertCommand);
 
                 if (row == 1)        // wykona się jeśli zapytanie miało wpływ na tabele
                 {
@@ -49,7 +51,7 @@ namespace RejestracjaCzasuPracyWinForms
 
         bool CheckEnteredValues()
         {
-            if (!ValidateDate.Name(name))
+            if (!ValidateDate.CheckIfNameAlreadyExist(name))
             {
                 MessageBox.Show("There is already user with this name");
             }

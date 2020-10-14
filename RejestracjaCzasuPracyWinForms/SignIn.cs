@@ -11,8 +11,8 @@ namespace RejestracjaCzasuPracyWinForms
 {
     public partial class SignIn : Form
     {
+        UserManager userManager = new UserManager();
         User currentUser;
-
         string name;
 
         public SignIn()
@@ -24,7 +24,7 @@ namespace RejestracjaCzasuPracyWinForms
         {
             name = chooseUserComboBox.Text;
 
-            currentUser = User.GetUserWithName(name);
+            currentUser = userManager.GetUserWithName(name);
 
             if (currentUser != null)
             {
@@ -52,7 +52,7 @@ namespace RejestracjaCzasuPracyWinForms
 
         void FillUserComboBox()
         {
-            List<User> userList = User.GetAllUsers();
+            List<User> userList = userManager.GetAllUsers();
             List<string> usersNamesList = new List<string>();
 
             foreach (User user in userList)

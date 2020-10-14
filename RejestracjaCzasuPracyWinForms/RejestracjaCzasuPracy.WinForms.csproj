@@ -129,9 +129,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\DatabaseConnection\DatabaseConnection.csproj">
+    <ProjectReference Include="..\DatabaseConnection\RejestracjaCzasuPracy.DB.csproj">
       <Project>{75a6c440-96ec-4305-9774-cd2c341fba40}</Project>
-      <Name>DatabaseConnection</Name>
+      <Name>RejestracjaCzasuPracy.DB</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

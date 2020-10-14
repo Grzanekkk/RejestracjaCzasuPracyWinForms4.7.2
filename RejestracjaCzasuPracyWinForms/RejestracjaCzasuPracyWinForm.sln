@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30524.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RejestracjaCzasuPracyWinForms", "RejestracjaCzasuPracyWinForms.csproj", "{69D7C71F-FCA5-4473-8B5D-61FAC7505AA7}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RejestracjaCzasuPracy.WinForms", "RejestracjaCzasuPracy.WinForms.csproj", "{69D7C71F-FCA5-4473-8B5D-61FAC7505AA7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DatabaseConnection", "..\DatabaseConnection\DatabaseConnection.csproj", "{75A6C440-96EC-4305-9774-CD2C341FBA40}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RejestracjaCzasuPracy.DB", "..\DatabaseConnection\RejestracjaCzasuPracy.DB.csproj", "{75A6C440-96EC-4305-9774-CD2C341FBA40}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

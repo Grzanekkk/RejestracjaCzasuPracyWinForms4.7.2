@@ -7,15 +7,14 @@ using System.Data;
 
 namespace DatabaseConnection
 {
-    public static class TimeManager
+    public class TimeManager
     {
-        private static DataTable dataTable = new DataTable();
-        private static string query;
+        private DataTable dataTable = new DataTable();
+        private string query;
+        private DBAccess dbAccess = new DBAccess();
 
 
-        //public static GoHomo(DateTime)
-
-        public static bool AddNewEvent(string userID, int minutesToCatchUp)
+        public bool AddNewEvent(string userID, int minutesToCatchUp)
         {
             SqlCommand insertCommand = new SqlCommand($"INSERT into Events(EventID, Date, MinutesToCatchUp, UserID) values(@EventID, @Date, @Minutes, @UserID)");
 
@@ -24,7 +23,7 @@ namespace DatabaseConnection
             insertCommand.Parameters.AddWithValue("@Minutes", minutesToCatchUp);
             insertCommand.Parameters.AddWithValue("@UserID", userID);
 
-            int row = DBAccess.ExecuteQuery(insertCommand);
+            int row = dbAccess.ExecuteQuery(insertCommand);
 
             if(row == 1)
             {
@@ -36,13 +35,13 @@ namespace DatabaseConnection
             }
         }
 
-        public static int CountMinutesToCatchUp(string userID)
+        public int CountUserTimeToCatchUp(string userID)
         {
             dataTable = new DataTable();
             int minutesToCatchUp = 0;
             query = $"SELECT MinutesToCatchUp from Events Where UserID = '{userID}'";
 
-            DBAccess.ReadDataThroughAdapter(query, dataTable);
+            dbAccess.ReadDataThroughAdapter(query, dataTable);
 
             foreach(DataRow row in dataTable.Rows)
             {
@@ -52,7 +51,7 @@ namespace DatabaseConnection
             return minutesToCatchUp;
         }
 
-        public static int GoHome(User currentUser)
+        public int CountMinutesToCatchUpFromNow(User currentUser)
         {
             TimeSpan timeSpan = DateTime.Now - currentUser.finishWorkHour;
 

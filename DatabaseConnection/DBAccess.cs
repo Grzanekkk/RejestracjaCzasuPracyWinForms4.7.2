@@ -1,24 +1,26 @@
 ﻿using System;
 using System.Data;
 using Microsoft.Data.SqlClient;
+using System.Configuration;
 
 //  Microsoft.Data.SqlClient NuGet packet requiered 
 
 namespace DatabaseConnection        // Class used to execute commands and connect to database
 {
-    public static class DBAccess
+    public class DBAccess
     {
-        private static SqlConnection connection = new SqlConnection();
-        private static SqlCommand command = new SqlCommand();
-        private static SqlDataAdapter adapter = new SqlDataAdapter();
-        public static SqlTransaction dbTran;
+        private SqlConnection connection = new SqlConnection();
+        private SqlCommand command = new SqlCommand();
+        private SqlDataAdapter adapter = new SqlDataAdapter();
+        private ConnectionStringSettings setting = ConfigurationManager.ConnectionStrings;
+        private SqlConnectionStringBuilder build = new SqlConnectionStringBuilder(setting.ConnectionString);
 
-        private static string connectionString = "Data Source=JASIO1\\JANEKSQL;Initial Catalog=RejestracjaCzasuPracy;Integrated Security=True";
+        private string connectionString = "Data Source=JASIO1\\JANEKSQL;Initial Catalog=RejestracjaCzasuPracy;Integrated Security=True";
 
 
         #region Connection Managment
 
-        public static void CreateConnection()
+        public void CreateConnection()
         {
             try
             {
@@ -35,22 +37,27 @@ namespace DatabaseConnection        // Class used to execute commands and connec
         }
 
 
-        public static void CloseConnection()
+        public void CloseConnection()
         {
             connection.Close();
+        }
+
+        private void CheckConnection()
+        {
+            if (connection.State != ConnectionState.Open)
+            {
+                CreateConnection();
+            }
         }
 
         #endregion Connection Managment
 
 
-        public static int ExecuteDataAdapter(DataTable tblName, string strSelectSql)
+        public int ExecuteDataAdapter(DataTable tblName, string strSelectSql)
         {
             try
             {
-                if (connection.State == 0)
-                {
-                    CreateConnection();
-                }
+                CheckConnection();
 
                 adapter.SelectCommand.CommandText = strSelectSql;
                 adapter.SelectCommand.CommandType = CommandType.Text;
@@ -71,14 +78,11 @@ namespace DatabaseConnection        // Class used to execute commands and connec
         }
 
 
-        public static void ReadDataThroughAdapter(string query, DataTable tblName)
+        public void ReadDataThroughAdapter(string query, DataTable tblName)
         {
             try
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    CreateConnection();
-                }
+                CheckConnection();
 
                 command.Connection = connection;
                 command.CommandText = query;
@@ -94,17 +98,14 @@ namespace DatabaseConnection        // Class used to execute commands and connec
         }
 
 
-        public static SqlDataReader ReadDataThroughReader(string query)
+        public SqlDataReader ReadDataThroughReader(string query)
         {
             //DataReader used to sequentially read data from a data source
             SqlDataReader reader;
 
             try
             {
-                if (connection.State == ConnectionState.Closed)
-                {
-                    CreateConnection();
-                }
+                CheckConnection();
 
                 command.Connection = connection;
                 command.CommandText = query;
@@ -120,14 +121,11 @@ namespace DatabaseConnection        // Class used to execute commands and connec
         }
 
 
-        public static int ExecuteQuery(SqlCommand dbCommand)
+        public int ExecuteQuery(SqlCommand dbCommand)
         {
             try
             {
-                if (connection.State == 0)
-                {
-                    CreateConnection();
-                }
+                CheckConnection();
 
                 dbCommand.Connection = connection;
                 dbCommand.CommandType = CommandType.Text;
