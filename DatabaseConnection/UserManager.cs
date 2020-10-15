@@ -11,7 +11,6 @@ namespace DatabaseConnection
         DataTable dataTable = new DataTable();
         DBAccess dbAccess = new DBAccess();
 
-
         public User GetUserWithNameAndPassword(string name, string password)
         {
             dataTable = new DataTable();
@@ -90,7 +89,8 @@ namespace DatabaseConnection
         {
             dataTable = new DataTable();
 
-            query = $"SELECT Date, MinutesToCatchUp, UserID from Events Where UserID = '{userID}'";
+            //query = $"SELECT Date, MinutesToCatchUp, UserID from Events Where UserID = '{userID}'";
+            query = $"SELECT * from Events Where UserID = '{userID}'";
 
             dbAccess.ReadDataThroughAdapter(query, dataTable);
 

@@ -13,7 +13,6 @@ namespace DatabaseConnection
         private string query;
         private DBAccess dbAccess = new DBAccess();
 
-
         public bool AddNewEvent(string userID, int minutesToCatchUp)
         {
             SqlCommand insertCommand = new SqlCommand($"INSERT into Events(EventID, Date, MinutesToCatchUp, UserID) values(@EventID, @Date, @Minutes, @UserID)");
@@ -38,17 +37,27 @@ namespace DatabaseConnection
         public int CountUserTimeToCatchUp(string userID)
         {
             dataTable = new DataTable();
+            query = $"SELECT sum(MinutesToCatchUp) Bilans, UserID from Events where UserID = '{userID}' group by UserID";
             int minutesToCatchUp = 0;
-            query = $"SELECT MinutesToCatchUp from Events Where UserID = '{userID}'";
 
             dbAccess.ReadDataThroughAdapter(query, dataTable);
 
-            foreach(DataRow row in dataTable.Rows)
+            if (dataTable.Rows.Count != 0)
             {
-                minutesToCatchUp += Convert.ToInt32(row["MinutesToCatchUp"]);
+                minutesToCatchUp = Convert.ToInt32(dataTable.Rows[0]["Bilans"]);
             }
 
             return minutesToCatchUp;
+        }
+
+        public DataTable GetAllUserTimeToCatchUp()
+        {
+            dataTable = new DataTable();
+            query = $"SELECT sum(MinutesToCatchUp) Bilans, UserID from Events group by UserID";
+
+            dbAccess.ReadDataThroughAdapter(query, dataTable);
+
+            return dataTable;
         }
 
         public int CountMinutesToCatchUpFromNow(User currentUser)
@@ -60,6 +69,13 @@ namespace DatabaseConnection
             // AddNewEvent(currentUser.id, minutesToCatchUp);
 
             return minutesToCatchUp;
+        }
+
+        public void UpdateEvents(DataTable changes)
+        {
+            query = $"SELECT * from Events";
+
+            dbAccess.ExecuteDataAdapter(changes, query);
         }
     }
 

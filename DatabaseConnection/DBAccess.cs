@@ -9,13 +9,9 @@ namespace DatabaseConnection        // Class used to execute commands and connec
 {
     public class DBAccess
     {
-        private SqlConnection connection = new SqlConnection();
         private SqlCommand command = new SqlCommand();
         private SqlDataAdapter adapter = new SqlDataAdapter();
-        private ConnectionStringSettings setting = ConfigurationManager.ConnectionStrings;
-        private SqlConnectionStringBuilder build = new SqlConnectionStringBuilder(setting.ConnectionString);
-
-        private string connectionString = "Data Source=JASIO1\\JANEKSQL;Initial Catalog=RejestracjaCzasuPracy;Integrated Security=True";
+        private SqlConnection connection = new SqlConnection();
 
 
         #region Connection Managment
@@ -26,7 +22,11 @@ namespace DatabaseConnection        // Class used to execute commands and connec
             {
                 if (connection.State != ConnectionState.Open)
                 {
-                    connection.ConnectionString = connectionString;
+                    ConnectionStringSettings setting = ConfigurationManager.ConnectionStrings["MainConnection"];
+                    SqlConnectionStringBuilder build = new SqlConnectionStringBuilder(setting.ConnectionString);
+                    connection = new SqlConnection(setting.ConnectionString);
+
+                    connection.ConnectionString = setting.ConnectionString;
                     connection.Open();
                 }
             }
@@ -51,6 +51,9 @@ namespace DatabaseConnection        // Class used to execute commands and connec
         }
 
         #endregion Connection Managment
+
+
+        #region Execute Queries
 
 
         public int ExecuteDataAdapter(DataTable tblName, string strSelectSql)
@@ -137,5 +140,8 @@ namespace DatabaseConnection        // Class used to execute commands and connec
                 throw ex;
             }
         }
+
+
+        #endregion Execute Queries
     }
 }

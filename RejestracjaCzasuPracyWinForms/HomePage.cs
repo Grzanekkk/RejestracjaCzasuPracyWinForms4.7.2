@@ -2,6 +2,7 @@
 using System.Windows.Forms;
 using DatabaseConnection;
 using System.Configuration;
+using System.Data;
 
 namespace RejestracjaCzasuPracyWinForms
 {
@@ -93,6 +94,10 @@ namespace RejestracjaCzasuPracyWinForms
         private void RefreshWindow()
         {
             eventsGridView.DataSource = userManager.GetAllUserEvents(currentUser.id);
+            eventsGridView.Columns["UserID"].ReadOnly = true;
+            eventsGridView.Columns["Date"].ReadOnly = true;
+            eventsGridView.Columns["EventID"].Visible = false;
+
             minutesToCatchUpTextBox.Text = timeManager.CountUserTimeToCatchUp(currentUser.id).ToString();
         }
 
@@ -112,6 +117,24 @@ namespace RejestracjaCzasuPracyWinForms
             }
 
             finishHourTextBox.Text = $"{currentUser.finishWorkHour.Hour}:{minutes}";
+        }
+
+        private void GoToSummaryButton_Click(object sender, EventArgs e)
+        {
+            AllUserSummaryForm summaryForm = new AllUserSummaryForm(currentUser);
+            summaryForm.Show();
+            this.Close();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //DataTable changes = ((DataTable)eventsGridView.DataSource).GetChanges();
+            DataTable changes = (DataTable)eventsGridView.DataSource;
+
+            if(changes != null)
+            {
+                timeManager.UpdateEvents(changes);
+            }
         }
     }
 }

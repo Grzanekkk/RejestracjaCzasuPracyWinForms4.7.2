@@ -42,6 +42,8 @@ namespace RejestracjaCzasuPracyWinForms
             this.label1 = new System.Windows.Forms.Label();
             this.startHourTextBox = new System.Windows.Forms.TextBox();
             this.goHomeButton = new System.Windows.Forms.Button();
+            this.GoToSummaryButton = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.eventsGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -92,9 +94,10 @@ namespace RejestracjaCzasuPracyWinForms
             // 
             // addNewEventButton
             // 
+            this.addNewEventButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.addNewEventButton.Location = new System.Drawing.Point(318, 137);
             this.addNewEventButton.Name = "addNewEventButton";
-            this.addNewEventButton.Size = new System.Drawing.Size(94, 36);
+            this.addNewEventButton.Size = new System.Drawing.Size(138, 36);
             this.addNewEventButton.TabIndex = 5;
             this.addNewEventButton.Text = "Add new record";
             this.addNewEventButton.UseVisualStyleBackColor = true;
@@ -102,6 +105,7 @@ namespace RejestracjaCzasuPracyWinForms
             // 
             // eventsGridView
             // 
+            this.eventsGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.eventsGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.eventsGridView.Location = new System.Drawing.Point(149, 197);
             this.eventsGridView.Name = "eventsGridView";
@@ -168,11 +172,35 @@ namespace RejestracjaCzasuPracyWinForms
             this.goHomeButton.UseVisualStyleBackColor = true;
             this.goHomeButton.Click += new System.EventHandler(this.goHomeButton_Click);
             // 
+            // GoToSummaryButton
+            // 
+            this.GoToSummaryButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.GoToSummaryButton.Location = new System.Drawing.Point(17, 449);
+            this.GoToSummaryButton.Name = "GoToSummaryButton";
+            this.GoToSummaryButton.Size = new System.Drawing.Size(125, 49);
+            this.GoToSummaryButton.TabIndex = 14;
+            this.GoToSummaryButton.Text = "Go to summary of all users";
+            this.GoToSummaryButton.UseVisualStyleBackColor = true;
+            this.GoToSummaryButton.Click += new System.EventHandler(this.GoToSummaryButton_Click);
+            // 
+            // button1
+            // 
+            this.button1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button1.Location = new System.Drawing.Point(318, 449);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(138, 49);
+            this.button1.TabIndex = 15;
+            this.button1.Text = "Update Records";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // HomePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 510);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.GoToSummaryButton);
             this.Controls.Add(this.goHomeButton);
             this.Controls.Add(this.startHourTextBox);
             this.Controls.Add(this.label1);
@@ -210,5 +238,7 @@ namespace RejestracjaCzasuPracyWinForms
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox startHourTextBox;
         private System.Windows.Forms.Button goHomeButton;
+        private System.Windows.Forms.Button GoToSummaryButton;
+        private System.Windows.Forms.Button button1;
     }
 }
