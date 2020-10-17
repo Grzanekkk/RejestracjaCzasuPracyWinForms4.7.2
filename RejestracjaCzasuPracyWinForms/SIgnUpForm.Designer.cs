@@ -31,8 +31,8 @@ namespace RejestracjaCzasuPracyWinForms
         {
             this.signUpLabel = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
-            this.NameTextBox = new System.Windows.Forms.TextBox();
-            this.PasswordTextBox = new System.Windows.Forms.TextBox();
+            this.FirstNameTextBox = new System.Windows.Forms.TextBox();
+            this.SurNameTextBox = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.SignUpButton = new System.Windows.Forms.Button();
             this.LoginLabel = new System.Windows.Forms.Label();
@@ -54,25 +54,23 @@ namespace RejestracjaCzasuPracyWinForms
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label1.Location = new System.Drawing.Point(48, 96);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 15);
+            this.label1.Size = new System.Drawing.Size(67, 15);
             this.label1.TabIndex = 1;
-            this.label1.Text = "Name";
+            this.label1.Text = "First Name";
             // 
-            // NameTextBox
+            // FirstNameTextBox
             // 
-            this.NameTextBox.Location = new System.Drawing.Point(120, 95);
-            this.NameTextBox.Name = "NameTextBox";
-            this.NameTextBox.Size = new System.Drawing.Size(128, 20);
-            this.NameTextBox.TabIndex = 2;
+            this.FirstNameTextBox.Location = new System.Drawing.Point(120, 95);
+            this.FirstNameTextBox.Name = "FirstNameTextBox";
+            this.FirstNameTextBox.Size = new System.Drawing.Size(128, 20);
+            this.FirstNameTextBox.TabIndex = 2;
             // 
-            // PasswordTextBox
+            // SurNameTextBox
             // 
-            this.PasswordTextBox.Location = new System.Drawing.Point(120, 130);
-            this.PasswordTextBox.Name = "PasswordTextBox";
-            this.PasswordTextBox.ReadOnly = true;
-            this.PasswordTextBox.Size = new System.Drawing.Size(128, 20);
-            this.PasswordTextBox.TabIndex = 4;
-            this.PasswordTextBox.Text = "Locked";
+            this.SurNameTextBox.Location = new System.Drawing.Point(120, 130);
+            this.SurNameTextBox.Name = "SurNameTextBox";
+            this.SurNameTextBox.Size = new System.Drawing.Size(128, 20);
+            this.SurNameTextBox.TabIndex = 4;
             // 
             // label2
             // 
@@ -80,9 +78,9 @@ namespace RejestracjaCzasuPracyWinForms
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label2.Location = new System.Drawing.Point(48, 131);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(55, 15);
+            this.label2.Size = new System.Drawing.Size(58, 15);
             this.label2.TabIndex = 3;
-            this.label2.Text = "Pasword";
+            this.label2.Text = "Surname";
             // 
             // SignUpButton
             // 
@@ -112,9 +110,9 @@ namespace RejestracjaCzasuPracyWinForms
             this.ClientSize = new System.Drawing.Size(341, 296);
             this.Controls.Add(this.LoginLabel);
             this.Controls.Add(this.SignUpButton);
-            this.Controls.Add(this.PasswordTextBox);
+            this.Controls.Add(this.SurNameTextBox);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.NameTextBox);
+            this.Controls.Add(this.FirstNameTextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.signUpLabel);
             this.Name = "SIgnUpForm";
@@ -128,8 +126,8 @@ namespace RejestracjaCzasuPracyWinForms
 
         private System.Windows.Forms.Label signUpLabel;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox NameTextBox;
-        private System.Windows.Forms.TextBox PasswordTextBox;
+        private System.Windows.Forms.TextBox FirstNameTextBox;
+        private System.Windows.Forms.TextBox SurNameTextBox;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button SignUpButton;
         private System.Windows.Forms.Label LoginLabel;

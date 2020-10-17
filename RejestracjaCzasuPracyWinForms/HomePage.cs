@@ -28,15 +28,6 @@ namespace RejestracjaCzasuPracyWinForms
 
         private void goHomeButton_Click(object sender, EventArgs e)
         {
-            //DateTime startDate = Convert.ToDateTime(startHourTextBox.Text);
-            //DateTime finishDate = Convert.ToDateTime(finishHourTextBox.Text);
-
-            //if (!ValidateDate.CheckWorkHours(startDate, finishDate))
-            //{
-            //    MessageBox.Show("Your work time is not equal to 8h");
-            //    return;
-            //}
-
             AddNewEventMsgBox(timeManager.CountMinutesToCatchUpFromNow(currentUser));
         }
 
@@ -93,10 +84,10 @@ namespace RejestracjaCzasuPracyWinForms
 
         private void RefreshWindow()
         {
-            eventsGridView.DataSource = userManager.GetAllUserEvents(currentUser.id);
-            eventsGridView.Columns["UserID"].ReadOnly = true;
+            eventsGridView.DataSource = userManager.GetUserEvents(currentUser.id);
             eventsGridView.Columns["Date"].ReadOnly = true;
             eventsGridView.Columns["EventID"].Visible = false;
+            eventsGridView.Columns["MemberID"].Visible = false;
 
             minutesToCatchUpTextBox.Text = timeManager.CountUserTimeToCatchUp(currentUser.id).ToString();
         }
@@ -126,14 +117,14 @@ namespace RejestracjaCzasuPracyWinForms
             this.Close();
         }
 
-        private void button1_Click(object sender, EventArgs e)
+        private void UpdateRecordsButton_Click(object sender, EventArgs e)
         {
-            //DataTable changes = ((DataTable)eventsGridView.DataSource).GetChanges();
             DataTable changes = (DataTable)eventsGridView.DataSource;
 
             if(changes != null)
             {
                 timeManager.UpdateEvents(changes);
+                RefreshWindow();
             }
         }
     }

@@ -9,8 +9,8 @@ namespace RejestracjaCzasuPracyWinForms
     {
         DBAccess dbAccess = new DBAccess();
 
-        string name;
-        string password;
+        string firstName;
+        string surName;
 
         public SIgnUpForm()
         {
@@ -19,52 +19,37 @@ namespace RejestracjaCzasuPracyWinForms
 
         private void SignUpButton_Click(object sender, EventArgs e)
         {
-            name = NameTextBox.Text;
-            password = PasswordTextBox.Text;
+            firstName = FirstNameTextBox.Text;
+            surName = SurNameTextBox.Text;
 
-            if (CheckEnteredValues())
+            
+            // Pierwsze nazwy tabelek w db, następne nazwy zmiennych
+            SqlCommand insertCommand = new SqlCommand("insert into CRMember(MemberID, FirstName, SurName, InsDate, InsUser, IsActive) " +
+                "values(@MemberID, @FirstName, @SurName, @InsDate, @InsUser, @IsActive)");
+
+            // Dopiero tutaj do zmienych przypisujemy wartości. @FirstName to co innego niż FirstName. Zabezpieczenie przed SQL injaction
+            insertCommand.Parameters.AddWithValue("@MemberID", Guid.NewGuid());
+            insertCommand.Parameters.AddWithValue("@FirstName", firstName);
+            insertCommand.Parameters.AddWithValue("@SurName", surName);
+            insertCommand.Parameters.AddWithValue("@InsDate", DateTime.Today);
+            insertCommand.Parameters.AddWithValue("@InsUser", "Default");
+            insertCommand.Parameters.AddWithValue("@IsActive", 1);
+
+            int row = dbAccess.ExecuteQuery(insertCommand);
+
+            if (row == 1)        // wykona się jeśli zapytanie miało wpływ na tabele
             {
-                // Pierwsze nazwy tabelek w db, następne nazwy zmiennych
-                SqlCommand insertCommand = new SqlCommand("insert into Users(UserID, Name) values(@USerID, @Name)");
+                MessageBox.Show("Account Created Successfully.");
+                //User currentUser = User.GetUserWithNameAndPassword(name, password);
 
-                // Dopiero tutaj do zmienych przypisujemy wartości. @Username to co innego niż Username. Zabezpieczenie przed SQL injaction
-                insertCommand.Parameters.AddWithValue("@UserID", Guid.NewGuid());
-                insertCommand.Parameters.AddWithValue("@Name", name);
-
-                int row = dbAccess.ExecuteQuery(insertCommand);
-
-                if (row == 1)        // wykona się jeśli zapytanie miało wpływ na tabele
-                {
-                    MessageBox.Show("Account Created Successfully. FINALLY");
-                    //User currentUser = User.GetUserWithNameAndPassword(name, password);
-
-                    //HomePage homePage = new HomePage(currentUser);
-                    //homePage.Show();
-                    //this.Close();
-                }
-                else
-                {
-                    MessageBox.Show("Failed to create account. Sorry");
-                }
+                //HomePage homePage = new HomePage(currentUser);
+                //homePage.Show();
+                //this.Close();
             }
-        }
-
-        bool CheckEnteredValues()
-        {
-            if (!ValidateDate.CheckIfNameAlreadyExist(name))
-            {
-                MessageBox.Show("There is already user with this name");
-            }
-            //else if (!ValidateDate.Password(password))
-            //{
-            //    MessageBox.Show("Your password is too short");
-            //}
             else
             {
-                return true;
+                MessageBox.Show("Failed to create account. Sorry");
             }
-
-            return false;
         }
 
         private void LoginLabel_Click(object sender, EventArgs e)

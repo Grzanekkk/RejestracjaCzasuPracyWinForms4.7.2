@@ -15,7 +15,7 @@ namespace DatabaseConnection
         {
             dataTable = new DataTable();
 
-            query = $"Select * from Users Where Name = '{name}' AND Password = '{password}'";
+            query = $"Select * from CRMember Where Name = '{name}' AND Password = '{password}'";
 
             dbAccess.ReadDataThroughAdapter(query, dataTable);
 
@@ -23,7 +23,7 @@ namespace DatabaseConnection
             {
                 User currentUser = new User
                 (
-                    dataTable.Rows[0]["UserID"].ToString(),
+                    dataTable.Rows[0]["MemberID"].ToString(),
                     dataTable.Rows[0]["Name"].ToString(),
                     dataTable.Rows[0]["Password"].ToString()
                 );
@@ -39,8 +39,9 @@ namespace DatabaseConnection
         public User GetUserWithName(string name)
         {
             dataTable = new DataTable();
+            string[] names = SplitUserName(name);
 
-            query = $"Select * from Users Where Name = '{name}'";
+            query = $"Select * from CRMember Where FirstName = '{names[0]}' AND SurName = '{names[1]}'";
 
             dbAccess.ReadDataThroughAdapter(query, dataTable);
 
@@ -48,8 +49,9 @@ namespace DatabaseConnection
             {
                 User currentUser = new User
                 (
-                    dataTable.Rows[0]["UserID"].ToString(),
-                    dataTable.Rows[0]["Name"].ToString()
+                    dataTable.Rows[0]["MemberID"].ToString(),
+                    dataTable.Rows[0]["FirstName"].ToString(),
+                    dataTable.Rows[0]["SurName"].ToString()
                 );
 
                 return currentUser;
@@ -65,7 +67,7 @@ namespace DatabaseConnection
             dataTable = new DataTable();
 
             List<User> listOfAllUsers = new List<User>();
-            query = $"Select * from Users";
+            query = $"Select * from CRMember";
 
             dbAccess.ReadDataThroughAdapter(query, dataTable);
 
@@ -74,8 +76,9 @@ namespace DatabaseConnection
             {
                 User user = new User
                 (
-                    dataTable.Rows[i]["UserID"].ToString(),
-                    dataTable.Rows[i]["Name"].ToString()
+                    dataTable.Rows[i]["MemberID"].ToString(),
+                    dataTable.Rows[i]["FirstName"].ToString(),
+                    dataTable.Rows[i]["SurName"].ToString()
                 );
 
                 listOfAllUsers.Add(user);
@@ -85,16 +88,22 @@ namespace DatabaseConnection
             return listOfAllUsers;
         }
 
-        public DataTable GetAllUserEvents(string userID)
+        public DataTable GetUserEvents(string memberID)
         {
             dataTable = new DataTable();
 
-            //query = $"SELECT Date, MinutesToCatchUp, UserID from Events Where UserID = '{userID}'";
-            query = $"SELECT * from Events Where UserID = '{userID}'";
+            query = $"SELECT * from Events Where MemberID = '{memberID}' ORDER BY Date DESC";
 
             dbAccess.ReadDataThroughAdapter(query, dataTable);
 
             return dataTable;
+        }
+
+        public string[] SplitUserName(string name)
+        {
+            // [0] = firstName, [1] = surName
+            string[] names = name.Split(' ');
+            return names;
         }
     }
 }

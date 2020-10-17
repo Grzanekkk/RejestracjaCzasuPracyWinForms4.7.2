@@ -7,7 +7,7 @@ namespace DatabaseConnection
 {
     public class User
     {
-        public string id, name, password;
+        public string id, name, firstName, surName, password;
 
         public DateTime startWorkHour;
         public DateTime finishWorkHour;
@@ -16,20 +16,12 @@ namespace DatabaseConnection
         #region Constructors
 
 
-        public User(string _id, string _name, string _password)
+        public User(string _id, string _firstName, string _surName)
         {
             id = _id;
-            name = _name;
-            password = _password;
-
-            startWorkHour = DateTime.Today.AddHours(9);
-            finishWorkHour = startWorkHour.AddHours(8);
-        }
-
-        public User(string _id, string _name)
-        {
-            id = _id;
-            name = _name;
+            name = $"{_firstName} {_surName}";
+            firstName = _firstName;
+            surName = _surName;
 
             startWorkHour = DateTime.Today.AddHours(9);
             finishWorkHour = startWorkHour.AddHours(8);

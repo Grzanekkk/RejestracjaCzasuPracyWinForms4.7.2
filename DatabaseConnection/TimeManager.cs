@@ -13,14 +13,14 @@ namespace DatabaseConnection
         private string query;
         private DBAccess dbAccess = new DBAccess();
 
-        public bool AddNewEvent(string userID, int minutesToCatchUp)
+        public bool AddNewEvent(string memberID, int minutesToCatchUp)
         {
-            SqlCommand insertCommand = new SqlCommand($"INSERT into Events(EventID, Date, MinutesToCatchUp, UserID) values(@EventID, @Date, @Minutes, @UserID)");
+            SqlCommand insertCommand = new SqlCommand($"INSERT into Events(EventID, Date, MinutesToCatchUp, MemberID) values(@EventID, @Date, @Minutes, @MemberID)");
 
             insertCommand.Parameters.AddWithValue("@EventID", Guid.NewGuid());
             insertCommand.Parameters.AddWithValue("@Date", DateTime.Now);
             insertCommand.Parameters.AddWithValue("@Minutes", minutesToCatchUp);
-            insertCommand.Parameters.AddWithValue("@UserID", userID);
+            insertCommand.Parameters.AddWithValue("@MemberID", memberID);
 
             int row = dbAccess.ExecuteQuery(insertCommand);
 
@@ -34,10 +34,10 @@ namespace DatabaseConnection
             }
         }
 
-        public int CountUserTimeToCatchUp(string userID)
+        public int CountUserTimeToCatchUp(string memberID)
         {
             dataTable = new DataTable();
-            query = $"SELECT sum(MinutesToCatchUp) Bilans, UserID from Events where UserID = '{userID}' group by UserID";
+            query = $"SELECT sum(MinutesToCatchUp) Bilans, MemberID from Events where MemberID = '{memberID}' group by MemberID";
             int minutesToCatchUp = 0;
 
             dbAccess.ReadDataThroughAdapter(query, dataTable);
@@ -53,7 +53,7 @@ namespace DatabaseConnection
         public DataTable GetAllUserTimeToCatchUp()
         {
             dataTable = new DataTable();
-            query = $"SELECT sum(MinutesToCatchUp) Bilans, UserID from Events group by UserID";
+            query = $"SELECT sum(MinutesToCatchUp) Bilans, MemberID from Events group by MemberID";
 
             dbAccess.ReadDataThroughAdapter(query, dataTable);
 
@@ -66,7 +66,6 @@ namespace DatabaseConnection
 
             int minutesToCatchUp = Convert.ToInt32(timeSpan.TotalMinutes);
 
-            // AddNewEvent(currentUser.id, minutesToCatchUp);
 
             return minutesToCatchUp;
         }
