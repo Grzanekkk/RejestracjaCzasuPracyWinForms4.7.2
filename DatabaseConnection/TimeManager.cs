@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using DatabaseConnection;
 using System.Data;
+using System.ComponentModel;
 
 namespace DatabaseConnection
 {
@@ -19,8 +20,16 @@ namespace DatabaseConnection
 
             insertCommand.Parameters.AddWithValue("@EventID", Guid.NewGuid());
             insertCommand.Parameters.AddWithValue("@Date", DateTime.Now);
-            insertCommand.Parameters.AddWithValue("@Minutes", minutesToCatchUp);
             insertCommand.Parameters.AddWithValue("@MemberID", memberID);
+
+            if (minutesToCatchUp == 0) 
+            {
+                insertCommand.Parameters.AddWithValue("@Minutes", DBNull.Value);
+            }
+            else
+            {
+                insertCommand.Parameters.AddWithValue("@Minutes", minutesToCatchUp);
+            }
 
             int row = dbAccess.ExecuteQuery(insertCommand);
 
@@ -66,7 +75,6 @@ namespace DatabaseConnection
 
             int minutesToCatchUp = Convert.ToInt32(timeSpan.TotalMinutes);
 
-
             return minutesToCatchUp;
         }
 
@@ -75,6 +83,35 @@ namespace DatabaseConnection
             query = $"SELECT * from Events";
 
             dbAccess.ExecuteDataAdapter(changes, query);
+        }
+
+        public bool CheckIfUserIsWorking(string memberID)
+        {
+            dataTable = new DataTable();
+            query = $"SELECT * from Events where MemberID = '{memberID}'";
+
+            dbAccess.ReadDataThroughAdapter(query, dataTable);
+
+            int i = 0;
+            foreach(DataRow row in dataTable.Rows)
+            {
+                if (dataTable.Rows[i]["MinutesToCatchUp"] == DBNull.Value)
+                {
+                    return true;
+                }                          
+            }
+
+            return false;
+        }
+
+        public void StopWorking(string memberID)
+        {
+            dataTable = new DataTable();
+            query = $"SELECT * from Events where MinutesToCatchUp IS NULL";
+
+            dbAccess.ReadDataThroughAdapter(query, dataTable);
+
+
         }
     }
 

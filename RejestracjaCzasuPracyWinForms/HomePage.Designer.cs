@@ -44,6 +44,9 @@ namespace RejestracjaCzasuPracyWinForms
             this.goHomeButton = new System.Windows.Forms.Button();
             this.GoToSummaryButton = new System.Windows.Forms.Button();
             this.UpdateRecordsButton = new System.Windows.Forms.Button();
+            this.StartWorkingButton = new System.Windows.Forms.Button();
+            this.Line = new System.Windows.Forms.Label();
+            this.TakeABreakeButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.eventsGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -116,9 +119,10 @@ namespace RejestracjaCzasuPracyWinForms
             // LoguotButton
             // 
             this.LoguotButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.LoguotButton.Location = new System.Drawing.Point(701, 470);
+            this.LoguotButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.LoguotButton.Location = new System.Drawing.Point(775, 461);
             this.LoguotButton.Name = "LoguotButton";
-            this.LoguotButton.Size = new System.Drawing.Size(87, 28);
+            this.LoguotButton.Size = new System.Drawing.Size(94, 37);
             this.LoguotButton.TabIndex = 7;
             this.LoguotButton.Text = "Logout";
             this.LoguotButton.UseVisualStyleBackColor = false;
@@ -128,7 +132,7 @@ namespace RejestracjaCzasuPracyWinForms
             // 
             this.workHoursLabel.AutoSize = true;
             this.workHoursLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.workHoursLabel.Location = new System.Drawing.Point(629, 38);
+            this.workHoursLabel.Location = new System.Drawing.Point(708, 28);
             this.workHoursLabel.Name = "workHoursLabel";
             this.workHoursLabel.Size = new System.Drawing.Size(116, 25);
             this.workHoursLabel.TabIndex = 8;
@@ -137,7 +141,7 @@ namespace RejestracjaCzasuPracyWinForms
             // finishHourTextBox
             // 
             this.finishHourTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.finishHourTextBox.Location = new System.Drawing.Point(696, 68);
+            this.finishHourTextBox.Location = new System.Drawing.Point(775, 58);
             this.finishHourTextBox.Name = "finishHourTextBox";
             this.finishHourTextBox.ReadOnly = true;
             this.finishHourTextBox.Size = new System.Drawing.Size(49, 26);
@@ -147,7 +151,7 @@ namespace RejestracjaCzasuPracyWinForms
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.Location = new System.Drawing.Point(676, 65);
+            this.label1.Location = new System.Drawing.Point(755, 55);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(19, 25);
             this.label1.TabIndex = 11;
@@ -156,7 +160,7 @@ namespace RejestracjaCzasuPracyWinForms
             // startHourTextBox
             // 
             this.startHourTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.startHourTextBox.Location = new System.Drawing.Point(622, 69);
+            this.startHourTextBox.Location = new System.Drawing.Point(701, 59);
             this.startHourTextBox.Name = "startHourTextBox";
             this.startHourTextBox.ReadOnly = true;
             this.startHourTextBox.Size = new System.Drawing.Size(48, 26);
@@ -165,7 +169,7 @@ namespace RejestracjaCzasuPracyWinForms
             // goHomeButton
             // 
             this.goHomeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.goHomeButton.Location = new System.Drawing.Point(626, 115);
+            this.goHomeButton.Location = new System.Drawing.Point(705, 105);
             this.goHomeButton.Name = "goHomeButton";
             this.goHomeButton.Size = new System.Drawing.Size(119, 58);
             this.goHomeButton.TabIndex = 13;
@@ -195,11 +199,45 @@ namespace RejestracjaCzasuPracyWinForms
             this.UpdateRecordsButton.UseVisualStyleBackColor = true;
             this.UpdateRecordsButton.Click += new System.EventHandler(this.UpdateRecordsButton_Click);
             // 
+            // StartWorkingButton
+            // 
+            this.StartWorkingButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.StartWorkingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.StartWorkingButton.Location = new System.Drawing.Point(705, 215);
+            this.StartWorkingButton.Name = "StartWorkingButton";
+            this.StartWorkingButton.Size = new System.Drawing.Size(119, 52);
+            this.StartWorkingButton.TabIndex = 16;
+            this.StartWorkingButton.Text = "Start Working";
+            this.StartWorkingButton.UseVisualStyleBackColor = false;
+            this.StartWorkingButton.Click += new System.EventHandler(this.StartWorkingButton_Click);
+            // 
+            // Line
+            // 
+            this.Line.AutoSize = true;
+            this.Line.Location = new System.Drawing.Point(686, 176);
+            this.Line.Name = "Line";
+            this.Line.Size = new System.Drawing.Size(150, 13);
+            this.Line.TabIndex = 17;
+            this.Line.Text = "▬▬▬▬▬▬▬▬▬▬▬▬▬";
+            // 
+            // TakeABreakeButton
+            // 
+            this.TakeABreakeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.TakeABreakeButton.Location = new System.Drawing.Point(705, 291);
+            this.TakeABreakeButton.Name = "TakeABreakeButton";
+            this.TakeABreakeButton.Size = new System.Drawing.Size(119, 37);
+            this.TakeABreakeButton.TabIndex = 18;
+            this.TakeABreakeButton.Text = "Take A Break";
+            this.TakeABreakeButton.UseVisualStyleBackColor = true;
+            // 
             // HomePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 510);
+            this.ClientSize = new System.Drawing.Size(881, 510);
+            this.Controls.Add(this.TakeABreakeButton);
+            this.Controls.Add(this.Line);
+            this.Controls.Add(this.StartWorkingButton);
             this.Controls.Add(this.UpdateRecordsButton);
             this.Controls.Add(this.GoToSummaryButton);
             this.Controls.Add(this.goHomeButton);
@@ -241,5 +279,8 @@ namespace RejestracjaCzasuPracyWinForms
         private System.Windows.Forms.Button goHomeButton;
         private System.Windows.Forms.Button GoToSummaryButton;
         private System.Windows.Forms.Button UpdateRecordsButton;
+        private System.Windows.Forms.Button StartWorkingButton;
+        private System.Windows.Forms.Label Line;
+        private System.Windows.Forms.Button TakeABreakeButton;
     }
 }

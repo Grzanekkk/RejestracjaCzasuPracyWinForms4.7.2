@@ -22,6 +22,7 @@ namespace RejestracjaCzasuPracyWinForms
         private void HomePage_Load(object sender, EventArgs e)
         {
             nameLabel.Text = currentUser.name;
+            CheckIfUserIsWorking();
             FillWorkHoursTextBoxes();
             RefreshWindow();
         }
@@ -90,6 +91,7 @@ namespace RejestracjaCzasuPracyWinForms
             eventsGridView.Columns["MemberID"].Visible = false;
 
             minutesToCatchUpTextBox.Text = timeManager.CountUserTimeToCatchUp(currentUser.id).ToString();
+            CheckIfUserIsWorking();
         }
 
         void FillWorkHoursTextBoxes()
@@ -125,6 +127,34 @@ namespace RejestracjaCzasuPracyWinForms
             {
                 timeManager.UpdateEvents(changes);
                 RefreshWindow();
+            }
+        }
+
+        private void StartWorkingButton_Click(object sender, EventArgs e)
+        {
+            if (CheckIfUserIsWorking())
+            {
+                timeManager.StopWorking(currentUser.id);
+            }
+            else    // User is not working now
+            {
+                timeManager.AddNewEvent(currentUser.id, 0);             
+            }
+
+            RefreshWindow();
+        }
+
+        bool CheckIfUserIsWorking()
+        {
+            if (timeManager.CheckIfUserIsWorking(currentUser.id))
+            {
+                StartWorkingButton.Text = "Stop Working";
+                return true;
+            }
+            else
+            {
+                StartWorkingButton.Text = "Start Working";
+                return false;
             }
         }
     }
