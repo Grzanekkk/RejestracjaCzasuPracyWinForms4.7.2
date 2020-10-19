@@ -43,6 +43,13 @@ namespace DatabaseConnection
             }
         }
 
+        public void UpdateEvents(DataTable changes)
+        {
+            query = $"SELECT * from Events";
+
+            dbAccess.ExecuteDataAdapter(changes, query);
+        }
+
         public int CountUserTimeToCatchUp(string memberID)
         {
             dataTable = new DataTable();
@@ -51,22 +58,12 @@ namespace DatabaseConnection
 
             dbAccess.ReadDataThroughAdapter(query, dataTable);
 
-            if (dataTable.Rows.Count != 0)
-            {
+            if (dataTable.Rows.Count != 0 && !dataTable.Rows[0].IsNull("Bilans") && dataTable.Rows[0]["Bilans"] != DBNull.Value)
+            {              
                 minutesToCatchUp = Convert.ToInt32(dataTable.Rows[0]["Bilans"]);
             }
 
             return minutesToCatchUp;
-        }
-
-        public DataTable GetAllUserTimeToCatchUp()
-        {
-            dataTable = new DataTable();
-            query = $"SELECT sum(MinutesToCatchUp) Bilans, MemberID from Events group by MemberID";
-
-            dbAccess.ReadDataThroughAdapter(query, dataTable);
-
-            return dataTable;
         }
 
         public int CountMinutesToCatchUpFromNow(User currentUser)
@@ -78,11 +75,15 @@ namespace DatabaseConnection
             return minutesToCatchUp;
         }
 
-        public void UpdateEvents(DataTable changes)
+        public DataTable GetAllUserTimeToCatchUp()
         {
-            query = $"SELECT * from Events";
+            dataTable = new DataTable();
+            query = $"SELECT sum(MinutesToCatchUp) Bilans, MemberID from Events group by MemberID";
+            //string query2 = $"SELECT e.*, u.FirstName, u.SurName from Events e inner join CRMember u on e.UserID = u";
 
-            dbAccess.ExecuteDataAdapter(changes, query);
+            dbAccess.ReadDataThroughAdapter(query, dataTable);
+
+            return dataTable;
         }
 
         public bool CheckIfUserIsWorking(string memberID)
@@ -92,10 +93,9 @@ namespace DatabaseConnection
 
             dbAccess.ReadDataThroughAdapter(query, dataTable);
 
-            int i = 0;
             foreach(DataRow row in dataTable.Rows)
             {
-                if (dataTable.Rows[i]["MinutesToCatchUp"] == DBNull.Value)
+                if (row.IsNull("MinutesToCatchUp"))
                 {
                     return true;
                 }                          
@@ -107,11 +107,50 @@ namespace DatabaseConnection
         public void StopWorking(string memberID)
         {
             dataTable = new DataTable();
+            int minutes = GetMinutesOfWorkSinceStart(memberID);
+
+            minutes -= 480; // 8 hours
+
+            dataTable.Rows[0]["MinutesToCatchUp"] = minutes;
+
+            UpdateEvents(dataTable);
+        }
+
+        public void StartWorking(string memberID)
+        {
+            if(GetMinutesOfWorkSinceStart(memberID) > 12 * 60); // 12 godzin
+            {
+                DeleteLetestNullRow(memberID);
+            }
+
+
+            AddNewEvent(memberID, 0);
+        }
+
+        int GetMinutesOfWorkSinceStart(string memberID)     // return 0 if there is no null record
+        {           
             query = $"SELECT * from Events where MinutesToCatchUp IS NULL";
 
             dbAccess.ReadDataThroughAdapter(query, dataTable);
 
+            if (dataTable.Rows.Count == 0)
+            {
+                return 0;
+            }
 
+            DateTime startWorkTime = Convert.ToDateTime(dataTable.Rows[0]["Date"]);
+
+            int minutesOfWork = Convert.ToInt32((DateTime.Now - startWorkTime).TotalMinutes);
+
+            return minutesOfWork;
+        }
+
+        void DeleteLetestNullRow(string memberID)
+        {
+            query = $"DELETE from Events where MinutesToCatchUp IS NULL";
+            SqlCommand deleteCommand = new SqlCommand(query);
+
+            dbAccess.ExecuteQuery(deleteCommand);
         }
     }
 

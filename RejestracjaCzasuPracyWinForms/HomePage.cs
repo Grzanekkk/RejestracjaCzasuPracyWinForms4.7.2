@@ -53,11 +53,58 @@ namespace RejestracjaCzasuPracyWinForms
 
         #endregion LOGOUT
 
-        private void addNewEventButton_Click(object sender, EventArgs e)
+
+        #region Events
+
+        private void AddNewEventButton_Click(object sender, EventArgs e)
         {
             int minutesToCatchUp = Convert.ToInt32(addNewEventTextBox.Text);
             AddNewEventMsgBox(minutesToCatchUp);
         }
+
+        private void GoToSummaryButton_Click(object sender, EventArgs e)
+        {
+            AllUserSummaryForm summaryForm = new AllUserSummaryForm(currentUser);
+            summaryForm.Show();
+            this.Close();
+        }
+
+        private void UpdateRecordsButton_Click(object sender, EventArgs e)
+        {
+            DataTable changes = (DataTable)eventsGridView.DataSource;
+
+            if (changes != null)
+            {
+                timeManager.UpdateEvents(changes);
+            }
+
+            RefreshWindow();
+        }
+
+        private void TimeInWorkCounterButton_Click(object sender, EventArgs e)
+        {
+            if (CheckIfUserIsWorking())
+            {
+                timeManager.StopWorking(currentUser.id);
+            }
+            else    // User is not working now
+            {
+                timeManager.StartWorking(currentUser.id);
+            }
+
+            RefreshWindow();
+        }
+
+        private void BreakButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        #endregion Events
+
+
+        #region Methods
+
 
         private void AddNewEventMsgBox(int minutesToCatchUp)
         {
@@ -112,51 +159,24 @@ namespace RejestracjaCzasuPracyWinForms
             finishHourTextBox.Text = $"{currentUser.finishWorkHour.Hour}:{minutes}";
         }
 
-        private void GoToSummaryButton_Click(object sender, EventArgs e)
-        {
-            AllUserSummaryForm summaryForm = new AllUserSummaryForm(currentUser);
-            summaryForm.Show();
-            this.Close();
-        }
-
-        private void UpdateRecordsButton_Click(object sender, EventArgs e)
-        {
-            DataTable changes = (DataTable)eventsGridView.DataSource;
-
-            if(changes != null)
-            {
-                timeManager.UpdateEvents(changes);
-                RefreshWindow();
-            }
-        }
-
-        private void StartWorkingButton_Click(object sender, EventArgs e)
-        {
-            if (CheckIfUserIsWorking())
-            {
-                timeManager.StopWorking(currentUser.id);
-            }
-            else    // User is not working now
-            {
-                timeManager.AddNewEvent(currentUser.id, 0);             
-            }
-
-            RefreshWindow();
-        }
-
         bool CheckIfUserIsWorking()
         {
             if (timeManager.CheckIfUserIsWorking(currentUser.id))
             {
-                StartWorkingButton.Text = "Stop Working";
+                BreakButton.Visible = true;
+                TimeInWorkCounterButton.Text = "Stop Working";
                 return true;
             }
-            else
+            else    // User is not working
             {
-                StartWorkingButton.Text = "Start Working";
+                BreakButton.Visible = false;
+                TimeInWorkCounterButton.Text = "Start Working";
                 return false;
             }
         }
+
+
+        #endregion Methods
     }
 }
 

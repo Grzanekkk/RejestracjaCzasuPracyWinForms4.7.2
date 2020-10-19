@@ -44,9 +44,9 @@ namespace RejestracjaCzasuPracyWinForms
             this.goHomeButton = new System.Windows.Forms.Button();
             this.GoToSummaryButton = new System.Windows.Forms.Button();
             this.UpdateRecordsButton = new System.Windows.Forms.Button();
-            this.StartWorkingButton = new System.Windows.Forms.Button();
+            this.TimeInWorkCounterButton = new System.Windows.Forms.Button();
             this.Line = new System.Windows.Forms.Label();
-            this.TakeABreakeButton = new System.Windows.Forms.Button();
+            this.BreakButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.eventsGridView)).BeginInit();
             this.SuspendLayout();
             // 
@@ -104,7 +104,7 @@ namespace RejestracjaCzasuPracyWinForms
             this.addNewEventButton.TabIndex = 5;
             this.addNewEventButton.Text = "Add new record";
             this.addNewEventButton.UseVisualStyleBackColor = true;
-            this.addNewEventButton.Click += new System.EventHandler(this.addNewEventButton_Click);
+            this.addNewEventButton.Click += new System.EventHandler(this.AddNewEventButton_Click);
             // 
             // eventsGridView
             // 
@@ -199,17 +199,17 @@ namespace RejestracjaCzasuPracyWinForms
             this.UpdateRecordsButton.UseVisualStyleBackColor = true;
             this.UpdateRecordsButton.Click += new System.EventHandler(this.UpdateRecordsButton_Click);
             // 
-            // StartWorkingButton
+            // TimeInWorkCounterButton
             // 
-            this.StartWorkingButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.StartWorkingButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.StartWorkingButton.Location = new System.Drawing.Point(705, 215);
-            this.StartWorkingButton.Name = "StartWorkingButton";
-            this.StartWorkingButton.Size = new System.Drawing.Size(119, 52);
-            this.StartWorkingButton.TabIndex = 16;
-            this.StartWorkingButton.Text = "Start Working";
-            this.StartWorkingButton.UseVisualStyleBackColor = false;
-            this.StartWorkingButton.Click += new System.EventHandler(this.StartWorkingButton_Click);
+            this.TimeInWorkCounterButton.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.TimeInWorkCounterButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.TimeInWorkCounterButton.Location = new System.Drawing.Point(705, 215);
+            this.TimeInWorkCounterButton.Name = "TimeInWorkCounterButton";
+            this.TimeInWorkCounterButton.Size = new System.Drawing.Size(119, 52);
+            this.TimeInWorkCounterButton.TabIndex = 16;
+            this.TimeInWorkCounterButton.Text = "Start Working";
+            this.TimeInWorkCounterButton.UseVisualStyleBackColor = false;
+            this.TimeInWorkCounterButton.Click += new System.EventHandler(this.TimeInWorkCounterButton_Click);
             // 
             // Line
             // 
@@ -220,24 +220,25 @@ namespace RejestracjaCzasuPracyWinForms
             this.Line.TabIndex = 17;
             this.Line.Text = "▬▬▬▬▬▬▬▬▬▬▬▬▬";
             // 
-            // TakeABreakeButton
+            // BreakButton
             // 
-            this.TakeABreakeButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.TakeABreakeButton.Location = new System.Drawing.Point(705, 291);
-            this.TakeABreakeButton.Name = "TakeABreakeButton";
-            this.TakeABreakeButton.Size = new System.Drawing.Size(119, 37);
-            this.TakeABreakeButton.TabIndex = 18;
-            this.TakeABreakeButton.Text = "Take A Break";
-            this.TakeABreakeButton.UseVisualStyleBackColor = true;
+            this.BreakButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.BreakButton.Location = new System.Drawing.Point(705, 291);
+            this.BreakButton.Name = "BreakButton";
+            this.BreakButton.Size = new System.Drawing.Size(119, 37);
+            this.BreakButton.TabIndex = 18;
+            this.BreakButton.Text = "Take A Break";
+            this.BreakButton.UseVisualStyleBackColor = true;
+            this.BreakButton.Click += new System.EventHandler(this.BreakButton_Click);
             // 
             // HomePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(881, 510);
-            this.Controls.Add(this.TakeABreakeButton);
+            this.Controls.Add(this.BreakButton);
             this.Controls.Add(this.Line);
-            this.Controls.Add(this.StartWorkingButton);
+            this.Controls.Add(this.TimeInWorkCounterButton);
             this.Controls.Add(this.UpdateRecordsButton);
             this.Controls.Add(this.GoToSummaryButton);
             this.Controls.Add(this.goHomeButton);
@@ -279,8 +280,8 @@ namespace RejestracjaCzasuPracyWinForms
         private System.Windows.Forms.Button goHomeButton;
         private System.Windows.Forms.Button GoToSummaryButton;
         private System.Windows.Forms.Button UpdateRecordsButton;
-        private System.Windows.Forms.Button StartWorkingButton;
+        private System.Windows.Forms.Button TimeInWorkCounterButton;
         private System.Windows.Forms.Label Line;
-        private System.Windows.Forms.Button TakeABreakeButton;
+        private System.Windows.Forms.Button BreakButton;
     }
 }
