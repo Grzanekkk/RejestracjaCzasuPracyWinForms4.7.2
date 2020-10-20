@@ -225,9 +225,9 @@ namespace RejestracjaCzasuPracyWinForms
             this.BreakButton.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.BreakButton.Location = new System.Drawing.Point(705, 291);
             this.BreakButton.Name = "BreakButton";
-            this.BreakButton.Size = new System.Drawing.Size(119, 37);
+            this.BreakButton.Size = new System.Drawing.Size(119, 48);
             this.BreakButton.TabIndex = 18;
-            this.BreakButton.Text = "Take A Break";
+            this.BreakButton.Text = "Finish Your Break";
             this.BreakButton.UseVisualStyleBackColor = true;
             this.BreakButton.Click += new System.EventHandler(this.BreakButton_Click);
             // 

@@ -85,7 +85,14 @@ namespace RejestracjaCzasuPracyWinForms
         {
             if (CheckIfUserIsWorking())
             {
+                if (CheckIfUserIsOnBreak())
+                {
+                    timeManager.FinishBreak(currentUser.id);
+                }
+
                 timeManager.StopWorking(currentUser.id);
+
+                BreakButton.Text = "Take A Break";
             }
             else    // User is not working now
             {
@@ -97,11 +104,20 @@ namespace RejestracjaCzasuPracyWinForms
 
         private void BreakButton_Click(object sender, EventArgs e)
         {
+            if (CheckIfUserIsOnBreak())
+            {
+                timeManager.FinishBreak(currentUser.id);
+            }
+            else
+            {
+                timeManager.StartBreak(currentUser.id);
+            }
 
+            RefreshWindow();
         }
 
-        #endregion Events
 
+        #endregion Events
 
         #region Methods
 
@@ -134,11 +150,14 @@ namespace RejestracjaCzasuPracyWinForms
         {
             eventsGridView.DataSource = userManager.GetUserEvents(currentUser.id);
             eventsGridView.Columns["Date"].ReadOnly = true;
+            eventsGridView.Columns["BreakTime"].ReadOnly = true;
             eventsGridView.Columns["EventID"].Visible = false;
             eventsGridView.Columns["MemberID"].Visible = false;
+            eventsGridView.Columns["BeginningOfTheLatestBreak"].Visible = false;
 
             minutesToCatchUpTextBox.Text = timeManager.CountUserTimeToCatchUp(currentUser.id).ToString();
             CheckIfUserIsWorking();
+            CheckIfUserIsOnBreak();
         }
 
         void FillWorkHoursTextBoxes()
@@ -171,6 +190,20 @@ namespace RejestracjaCzasuPracyWinForms
             {
                 BreakButton.Visible = false;
                 TimeInWorkCounterButton.Text = "Start Working";
+                return false;
+            }
+        }
+
+        bool CheckIfUserIsOnBreak()
+        {
+            if (timeManager.IsOnBreak(currentUser.id))
+            {
+                BreakButton.Text = "Finish Your Break";
+                return true;
+            }
+            else
+            {
+                BreakButton.Text = "Take A Break";
                 return false;
             }
         }

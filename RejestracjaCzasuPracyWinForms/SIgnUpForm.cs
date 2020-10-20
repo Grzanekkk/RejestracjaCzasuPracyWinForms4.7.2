@@ -21,7 +21,6 @@ namespace RejestracjaCzasuPracyWinForms
         {
             firstName = FirstNameTextBox.Text;
             surName = SurNameTextBox.Text;
-
             
             // Pierwsze nazwy tabelek w db, następne nazwy zmiennych
             SqlCommand insertCommand = new SqlCommand("insert into CRMember(MemberID, FirstName, SurName, InsDate, InsUser, IsActive) " +

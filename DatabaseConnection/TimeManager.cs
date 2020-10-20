@@ -1,26 +1,24 @@
 ﻿using Microsoft.Data.SqlClient;
 using System;
-using System.Collections.Generic;
-using System.Text;
-using DatabaseConnection;
 using System.Data;
-using System.ComponentModel;
 
 namespace DatabaseConnection
 {
     public class TimeManager
     {
         private DataTable dataTable = new DataTable();
-        private string query;
         private DBAccess dbAccess = new DBAccess();
+        private string query;
 
         public bool AddNewEvent(string memberID, int minutesToCatchUp)
         {
-            SqlCommand insertCommand = new SqlCommand($"INSERT into Events(EventID, Date, MinutesToCatchUp, MemberID) values(@EventID, @Date, @Minutes, @MemberID)");
+            SqlCommand insertCommand = new SqlCommand($"INSERT into Events(EventID, Date, MinutesToCatchUp, MemberID, BreakTime) " +
+                $"values(@EventID, @Date, @Minutes, @MemberID, @BreakTime)");
 
             insertCommand.Parameters.AddWithValue("@EventID", Guid.NewGuid());
             insertCommand.Parameters.AddWithValue("@Date", DateTime.Now);
             insertCommand.Parameters.AddWithValue("@MemberID", memberID);
+            insertCommand.Parameters.AddWithValue("@BreakTime", 0);
 
             if (minutesToCatchUp == 0) 
             {
@@ -86,6 +84,10 @@ namespace DatabaseConnection
             return dataTable;
         }
 
+
+        #region Work Button
+
+
         public bool CheckIfUserIsWorking(string memberID)
         {
             dataTable = new DataTable();
@@ -98,7 +100,7 @@ namespace DatabaseConnection
                 if (row.IsNull("MinutesToCatchUp"))
                 {
                     return true;
-                }                          
+                }        
             }
 
             return false;
@@ -109,7 +111,7 @@ namespace DatabaseConnection
             dataTable = new DataTable();
             int minutes = GetMinutesOfWorkSinceStart(memberID);
 
-            minutes -= 480; // 8 hours
+            minutes -= 480 + GetUserMinutesOnBreak(memberID); // 8 hours, odejmujemy 8 godzin oraz czas spędzony na przerwie aby sprawdzić różnice i dodać reszte do nadrobienia
 
             dataTable.Rows[0]["MinutesToCatchUp"] = minutes;
 
@@ -118,18 +120,83 @@ namespace DatabaseConnection
 
         public void StartWorking(string memberID)
         {
-            if(GetMinutesOfWorkSinceStart(memberID) > 12 * 60); // 12 godzin
+            if(GetMinutesOfWorkSinceStart(memberID) > 840); // 14 godzin, sprawdzamy czy nie ma recordu z wczoraj
             {
                 DeleteLetestNullRow(memberID);
             }
 
-
             AddNewEvent(memberID, 0);
         }
 
-        int GetMinutesOfWorkSinceStart(string memberID)     // return 0 if there is no null record
+        private int GetMinutesOfWorkSinceStart(string memberID)     
         {           
-            query = $"SELECT * from Events where MinutesToCatchUp IS NULL";
+            return GetMinutesFromDateTimeInDataBase(memberID, "MinutesToCatchUp", "Date");
+        }
+
+
+        #endregion Work Button
+
+        #region Break Button
+
+
+        public void StartBreak(string memberID)
+        {
+            dataTable = new DataTable();
+            query = $"SELECT * from Events where MinutesToCatchUp IS NULL AND MemberId = '{memberID}'";
+            dbAccess.ReadDataThroughAdapter(query, dataTable);
+
+            dataTable.Rows[0]["BeginningOfTheLatestBreak"] = DateTime.Now;
+
+            UpdateEvents(dataTable);
+        }
+
+        public void FinishBreak(string memberID)
+        {
+            dataTable = new DataTable();
+            query = $"SELECT * from Events where MinutesToCatchUp IS NULL AND MemberId = '{memberID}'";
+            dbAccess.ReadDataThroughAdapter(query, dataTable);
+
+
+            int minutesOnBreak = Convert.ToInt32((DateTime.Now - Convert.ToDateTime(dataTable.Rows[0]["BeginningOfTheLatestBreak"])).TotalMinutes);
+
+            dataTable.Rows[0]["BreakTime"] = Convert.ToInt32(dataTable.Rows[0]["BreakTime"]) + minutesOnBreak;
+            dataTable.Rows[0]["BeginningOfTheLatestBreak"] = DBNull.Value;
+
+            UpdateEvents(dataTable);
+        }
+
+
+        public bool IsOnBreak(string memberID)
+        {
+            dataTable = new DataTable();
+            query = $"SELECT * from Events where MinutesToCatchUp IS NULL AND MemberId = '{memberID}'";
+            dbAccess.ReadDataThroughAdapter(query, dataTable);
+
+            if (dataTable.Rows.Count != 0 && dataTable.Rows[0]["BeginningOfTheLatestBreak"] != DBNull.Value)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        private int GetUserMinutesOnBreak(string memberID)
+        {
+            dataTable = new DataTable();
+            query = $"SELECT * from Events where MinutesToCatchUp IS NULL AND MemberId = '{memberID}'";
+            dbAccess.ReadDataThroughAdapter(query, dataTable);
+
+            int minutesOnBreak = Convert.ToInt32(dataTable.Rows[0]["BreakTime"]);
+
+            return minutesOnBreak;
+        }
+
+        #endregion Break Button
+
+
+        private int GetMinutesFromDateTimeInDataBase(string memberID, string nullColumnName, string dateColumnName)    // return 0 if there is no null record
+        {
+            query = $"SELECT * from Events where {nullColumnName} IS NULL AND MemberID = '{memberID}'";
 
             dbAccess.ReadDataThroughAdapter(query, dataTable);
 
@@ -138,14 +205,19 @@ namespace DatabaseConnection
                 return 0;
             }
 
-            DateTime startWorkTime = Convert.ToDateTime(dataTable.Rows[0]["Date"]);
+            DateTime startTime = Convert.ToDateTime(dataTable.Rows[0][dateColumnName]);
 
-            int minutesOfWork = Convert.ToInt32((DateTime.Now - startWorkTime).TotalMinutes);
+            if (startTime.Day == DateTime.Today.Day)
+            {
+                int minutesOfWork = Convert.ToInt32((DateTime.Now - startTime).TotalMinutes);
 
-            return minutesOfWork;
+                return minutesOfWork;
+            }
+
+            return 0;
         }
 
-        void DeleteLetestNullRow(string memberID)
+        private void DeleteLetestNullRow(string memberID)
         {
             query = $"DELETE from Events where MinutesToCatchUp IS NULL";
             SqlCommand deleteCommand = new SqlCommand(query);
